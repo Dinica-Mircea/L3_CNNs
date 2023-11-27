@@ -103,6 +103,7 @@ optimizer - the chosen optimizer. It holds the current state of the model and wi
 criterion - the chosen loss function.
 """
 num_epochs = 50
+loss_history=[]
 for epoch in range(num_epochs):  # num_epochs is a hyperparameter that specifies when is the training process
     running_loss = 0.0
     for i, data in enumerate(train_loader, 0):  # iterate over the dataset, now we use data loaders
@@ -118,7 +119,7 @@ for epoch in range(num_epochs):  # num_epochs is a hyperparameter that specifies
 
         # apply the loss function to determine how your model performed on this batch
         loss = criterion(outputs, labels)
-        running_loss=loss.detach().numpy()/batch_size
+        loss_history.append(loss)
         # start the backprop process. it will compute the gradient of the loss with respect to the graph leaves
         loss.backward()
 
@@ -134,9 +135,12 @@ exit()
 
 """"""Now let's examine the effect of the learning rate over the training process.
 
-- First, create two plots: one in which you plot, for each epoch, the loss values on the training and the test data (two series on the same graph), and another one in which you plot, for each epoch, the accuracy values on the training and the test data.
+- First, create two plots: one in which you plot, for each epoch, 
+the loss values on the training and the test data (two series on the same graph),
+ and another one in which you plot, for each epoch, the accuracy values on the training and the test data.
 - Experiment with different values for the learning rate.
-- Then, experiment with a torch.optim.lr_scheduler to adjust the learning rate during the training process [doc](!https://pytorch.org/docs/stable/optim.html).
+- Then, experiment with a torch.optim.lr_scheduler to adjust the learning rate during the training process
+ [doc](!https://pytorch.org/docs/stable/optim.html).
 
 ```
 optimizer = SGD(model, lr)
